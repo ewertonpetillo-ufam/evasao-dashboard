@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: ./api
+    container_name: api_service
+    ports:
+      - "5000:5000"
+    networks:
+      - mas-net
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: dashboard/Dockerfile
+    container_name: dashboard_service
+    ports:
+      - "8501:8501"
+    networks:
+      - mas-net
+    depends_on:
+      - api
+
+networks:
+  mas-net:
+    driver: bridge
